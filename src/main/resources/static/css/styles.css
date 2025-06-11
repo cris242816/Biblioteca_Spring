@@ -1,0 +1,27 @@
+body {
+    padding-top: 20px;
+    padding-bottom: 60px;
+}
+
+.jumbotron {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.form-control, .form-select {
+    margin-bottom: 10px;
+}
+
+.invalid-feedback {
+    display: block;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.badge {
+    font-size: 0.9em;
+}
