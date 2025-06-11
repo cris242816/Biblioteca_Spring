@@ -1,10 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/header :: header(templateTitle='usuarios')}">
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-</body>
-</html>
+<div class="container mt-4">
+    <h2>Lista de Usuarios</h2>
+
+    <div class="d-flex justify-content-between mb-3">
+        <a th:href="@{/usuarios/nuevo}" class="btn btn-primary">Nuevo Usuario</a>
+        <form th:action="@{/usuarios/buscar}" method="get" class="d-flex">
+            <input class="form-control me-2" type="search" name="nombre" placeholder="Buscar usuarios...">
+            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+        </form>
+    </div>
+
+    <div th:if="${#lists.isEmpty(usuarios)}" class="alert alert-info">
+        No hay usuarios registrados.
+    </div>
+
+    <table th:unless="${#lists.isEmpty(usuarios)}" class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="usuario : ${usuarios}">
+            <td th:text="${usuario.id}"></td>
+            <td th:text="${usuario.nombre}"></td>
+            <td th:text="${usuario.apellido}"></td>
+            <td th:text="${usuario.email}"></td>
+            <td th:text="${usuario.telefono}"></td>
+            <td>
+                <a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}" class="btn btn-sm btn-warning">Editar</a>
+                <a th:href="@{/usuarios/eliminar/{id}(id=${usuario.id})}" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</a>
+                <a th:href="@{/prestamos/usuario/{usuarioId}(usuarioId=${usuario.id})}" class="btn btn-sm btn-info">Préstamos</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
