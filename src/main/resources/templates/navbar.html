@@ -1,10 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">Biblioteca</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/usuarios}" th:classappend="${#request.getRequestURI().contains('/usuarios')} ? 'active'">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/libros}" th:classappend="${#request.getRequestURI().contains('/libros')} ? 'active'">Libros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/revistas}" th:classappend="${#request.getRequestURI().contains('/revistas')} ? 'active'">Revistas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dvds}" th:classappend="${#request.getRequestURI().contains('/dvds')} ? 'active'">DVDs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/categorias}" th:classappend="${#request.getRequestURI().contains('/categorias')} ? 'active'">Categorías</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/prestamos}" th:classappend="${#request.getRequestURI().contains('/prestamos')} ? 'active'">Préstamos</a>
+                </li>
+            </ul>
+            <form th:action="@{/libros/buscar}" method="get" class="d-flex">
+                <input class="form-control me-2" type="search" name="titulo" placeholder="Buscar libros...">
+                <button class="btn btn-outline-light" type="submit">Buscar</button>
+            </form>
+        </div>
+    </div>
+</nav>
