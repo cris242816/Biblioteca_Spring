@@ -1,10 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/header :: header(templateTitle='libros')}">
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-</body>
-</html>
+<div class="container mt-4">
+    <h2 th:text="${busqueda} ? ${busqueda} : 'Lista de Libros'"></h2>
+
+    <div class="d-flex justify-content-between mb-3">
+        <div>
+            <a th:href="@{/libros/nuevo}" class="btn btn-primary me-2">Nuevo Libro</a>
+            <a th:href="@{/libros/disponibles}" class="btn btn-success">Disponibles</a>
+        </div>
+        <form th:action="@{/libros/buscar}" method="get" class="d-flex">
+            <input class="form-control me-2" type="search" name="titulo" placeholder="Buscar por título...">
+            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+        </form>
+    </div>
+
+    <div th:if="${#lists.isEmpty(libros)}" class="alert alert-info">
+        No hay libros registrados.
+    </div>
+
+    <table th:unless="${#lists.isEmpty(libros)}" class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Editorial</th>
+            <th>Año</th>
+            <th>ISBN</th>
+            <th>Disponible</th>
+            <th>Categoría</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="libro : ${libros}">
+            <td th:text="${libro.id}"></td>
+            <td th:text="${libro.titulo}"></td>
+            <td th:text="${libro.autor}"></td>
+            <td th:text="${libro.editorial}"></td>
+            <td th:text="${libro.anioPublicacion}"></td>
+            <td th:text="${libro.isbn}"></td>
+            <td>
+                <span th:if="${libro.disponible}" class="badge bg-success">Sí</span>
+                <span th:unless="${libro.disponible}" class="badge bg-danger">No</span>
+            </td>
+            <td th:text="${libro.categoria?.nombre} ?: 'Sin categoría'"></td>
+            <td>
+                <a th:href="@{/libros/editar/{id}(id=${libro.id})}" class="btn btn-sm btn-warning">Editar</a>
+                <a th:href="@{/libros/eliminar/{id}(id=${libro.id})}" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este libro?');">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
